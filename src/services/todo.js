@@ -38,6 +38,12 @@ export function updateStatus(items, itemId, completed) {
         }
     });
 }
+export const updateTaskPriority = (list, taskId, priority) => {
+    return list.map(task => 
+        task.id === taskId ? { ...task, priority } : task
+    );
+};
+
 
 /**
  * A counter to generate a unique id for a todo item.
@@ -57,10 +63,13 @@ function getNextId() {
  * @param {Object} data
  * @return {Array}
  */
-export function addToList(list, data) {
-    let item = Object.assign({
-        id: getNextId()
-    }, data);
 
-    return list.concat([item]);
-}
+// Add a priority to the task when adding to the list
+// services/todo.js
+export const addToList = (list, task) => {
+    const newTask = {
+        ...task,
+        id: list.length + 1, // Assuming this is a simple ID generation method
+    };
+    return [...list, newTask];
+};
